@@ -33,13 +33,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 final BleScanDeviceListDialog deviceListDialog = new BleScanDeviceListDialog();
-                deviceListDialog.show(getSupportFragmentManager(), "sss");
+                deviceListDialog.show(getSupportFragmentManager(), MainActivity.class.getSimpleName());
                 deviceListDialog.setOnRVItemClickListener(new BleScanDeviceListDialog.OnRvItemClickListener() {
                     @Override
                     public void onItemClick(BleScanDeviceListDialog.BleDevice bleDevice) {
                         deviceListDialog.dismiss();
                         Log.e("lgd", bleDevice.toString());
-                        BleHelper.create(MainActivity.this).connectionBleAndNotificationConnectState(true, bleDevice.getMac(), new Action1<RxBleConnection.RxBleConnectionState>() {
+                        BleHelper.create(MainActivity.this).connectionBleAndNotificationConnectState(false, bleDevice.getMac(), new Action1<RxBleConnection.RxBleConnectionState>() {
                             @Override
                             public void call(RxBleConnection.RxBleConnectionState rxBleConnectionState) {
                                 if (rxBleConnectionState.equals(RxBleConnection.RxBleConnectionState.CONNECTED)) {
