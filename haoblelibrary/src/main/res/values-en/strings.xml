@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">HaoBleLibrary</string>
+	<string name="error_bluetooth_not_available">Bluetooth is unavailable</string>
+	<string name="error_bluetooth_disabled">Bluetooth is not open</string>
+	<string name="error_location_permission_missing">Bluetooth permissions not granted to express</string>
+	<string name="error_location_services_disabled">Not granted to express their location services</string>
+	<string name="error_unable_to_start_scanning">No bluetooth devices found scan</string>
+	<string name="error_don_not_support_bluetooth">The device does not support bluetooth4.0</string>
+</resources>

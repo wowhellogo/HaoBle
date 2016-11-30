@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">HaoBleLibrary</string>
+    <string name="error_bluetooth_not_available">蓝牙Ble不可用</string>
+    <string name="error_bluetooth_disabled">蓝牙Ble未开启</string>
+    <string name="error_location_permission_missing">未授抒蓝牙权限</string>
+    <string name="error_location_services_disabled">未授抒位置服务</string>
+    <string name="error_unable_to_start_scanning">扫描未发现蓝牙设备</string>
+    <string name="error_don_not_support_bluetooth">该设备不支持蓝牙Ble</string>
+    <string name="device_search">设备搜索中</string>
+    <string name="str_choice_device">请选择设备连接</string>
+    <string name="title_settings_dialog">请求权限</string>
+    <string name="setting">设置</string>
+    <string name="cancel">取消</string>
+    <string name="rationale_ask_again">这个程序没有请求相关权限可能无法正确工作。打开应用程序设置修改应用程序的权限。</string>
+</resources>
