@@ -1,9 +1,8 @@
 # HaoBle
 基于RxAndroidBle封装的蓝牙扫描、连接、蓝牙连接监听、Gat读写、通知等蓝牙操作
 
-![ble1](/screenshots/ble1.png)
-![ble2](/screenshots/ble2.png)
-![ble3](/screenshots/ble3.png)
+![ble1](/screenshots/ble11.png)
+![ble2](/screenshots/ble22.png)
 1、搜索蓝牙列表对话框
 ```
  final BleScanDeviceListDialog deviceListDialog = new BleScanDeviceListDialog();
