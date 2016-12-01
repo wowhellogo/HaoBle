@@ -89,12 +89,7 @@ public class BleHelper {
     public BleHelper scanBleDevices(Action1<RxBleScanResult> action1, UUID... filterServiceUUIDs) {
         mScanSubscription = mRxBleClient.scanBleDevices(filterServiceUUIDs)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnUnsubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        clear();
-                    }
-                })
+                .doOnUnsubscribe(this::clear)
                 .subscribe(action1, this::onScanFailure);
         return NestInstance.sMBleHelper;
     }
@@ -267,26 +262,41 @@ public class BleHelper {
         return NestInstance.sMBleHelper;
     }
 
-    public BleHelper writeCharacteristicAndReadCharacteristic(RxBleConnection rxBleConnection, String characteristicUUID, Action1<byte[]> action1, Action1<Throwable> error) {
-        byte b[] = new byte[8];
-        rxBleConnection.writeCharacteristic(UUID.fromString(characteristicUUID), b).doOnNext(new Action1<byte[]>() {
-            @Override
-            public void call(byte[] bytes) {
-                //写入回调
-            }
-        }).flatMap(new Func1<byte[], Observable<byte[]>>() {
-            @Override
-            public Observable<byte[]> call(byte[] bytes) {
-                return rxBleConnection.readCharacteristic(UUID.fromString(characteristicUUID));
-            }
-        }).subscribe(new Action1<byte[]>() {
-            @Override
-            public void call(byte[] bytes) {
-
-            }
-        });
+    /**
+     * 写读GAT
+     *
+     * @param b            写入的字节
+     * @param writeAction1 写成功的回调
+     * @param redAction1   读成功的回调
+     * @param error        异常
+     * @return
+     */
+    public BleHelper writeCharacteristicAndReadCharacteristic(RxBleConnection rxBleConnection, String characteristicUUID, byte[] b, Action1<byte[]> writeAction1, Action1<byte[]> redAction1, Action1<Throwable> error) {
+        rxBleConnection.writeCharacteristic(UUID.fromString(characteristicUUID), b)
+                .doOnNext(writeAction1)
+                .flatMap(bytes -> rxBleConnection.readCharacteristic(UUID.fromString(characteristicUUID)))
+                .subscribe(redAction1, error);
         return NestInstance.sMBleHelper;
     }
+
+    /**
+     * 读写GAT
+     *
+     * @param b            写入的字节
+     * @param writeAction1 写成功的回调
+     * @param redAction1   读成功的回调
+     * @param error        异常
+     * @return
+     */
+    public BleHelper readCharacteristicAndWriteCharacteristic(RxBleConnection rxBleConnection, String characteristicUUID, byte[] b, Action1<byte[]> redAction1, Action1<byte[]> writeAction1, Action1<Throwable> error) {
+        rxBleConnection.readCharacteristic(UUID.fromString(characteristicUUID))
+                .doOnNext(redAction1)
+                .flatMap(bytes -> rxBleConnection.writeCharacteristic(UUID.fromString(characteristicUUID), b))
+                .subscribe(redAction1, error);
+        return NestInstance.sMBleHelper;
+    }
+
+
 
 
     public BleHelper unNotificationSubscription() {
