@@ -28,7 +28,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 import rx.functions.Action1;
 
 /**
- * @Package com.mk.fortpeace.app.lock.view.fragment
+ * @Package com.haoblelibrary.dialog
  * @作 用:
  * @创 建 人: 林国定 邮箱：linggoudingg@gmail.com
  * @日 期: 2016年09月14日  15:16
@@ -87,7 +87,7 @@ public class BleScanDeviceListDialog extends DialogFragment implements EasyPermi
         public void onBindViewHolder(ViewHolder holder, int position) {
             BleDevice mode = getItem(position);
             holder.tvName.setText(isEmpty(mode.getName()));
-            holder.tvRssi.setText(isEmpty("强度：" + mode.getRssi()));
+            holder.tvRssi.setText(isEmpty(getContext().getString(R.string.rssi) + mode.getRssi()));
             holder.tvMac.setText(isEmpty(mode.getMac()));
         }
 

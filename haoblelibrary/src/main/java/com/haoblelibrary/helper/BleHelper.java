@@ -151,20 +151,10 @@ public class BleHelper {
     public BleHelper connectionBleAndNotificationConnectState(boolean autoConnect, String macAddress, Action1<RxBleConnection.RxBleConnectionState> action0, Action1<RxBleConnection> action1, Action1<Throwable> error) {
         mConnectionSubscription = mRxBleClient.getBleDevice(macAddress)
                 .establishConnection(mContext, autoConnect)
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() {
-                        observeConnectionStateChanges(macAddress, action0);
-                    }
-                })
+                .doOnSubscribe(() -> observeConnectionStateChanges(macAddress, action0))
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnUnsubscribe(this::clearconnectionSubscription)
-                .subscribe(new Action1<RxBleConnection>() {
-                    @Override
-                    public void call(RxBleConnection rxBleConnection) {
-
-                    }
-                }, error);
+                .subscribe(action1, error);
         return NestInstance.sMBleHelper;
     }
 
